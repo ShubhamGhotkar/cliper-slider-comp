@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="itm in inputArray" :key="itm" class="input-container">
+    <div v-for="(itm, indx) in inputArray" :key="indx" class="input-container">
       <div class="label-container">
         <label :class="itm.labelClasses">{{ itm.labelTittle }}</label>
         <label
@@ -98,7 +98,7 @@
       <div
         class="select-container"
         v-if="itm.clientsProp[0].isSelect"
-        @click="changeCursor"
+        @click="changeCursor(itm.setData)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -123,8 +123,10 @@
 export default {
   props: ["inputArray"],
   methods: {
-    changeCursor() {
-      return (window.body.style.cursor = "pointer");
+    changeCursor(e) {
+      window.parent.postMessage({ action: "select text", key: e }, "*");
+      document.body.style.cursor = "crosshair";
+      
     },
   },
 };
