@@ -95,7 +95,11 @@
         </div>
       </div>
       <!--  -->
-      <div class="select-container" v-if="itm.clientsProp[0].isSelect">
+      <div
+        class="select-container"
+        v-if="itm.clientsProp[0].isSelect"
+        @click="changeCursor"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -118,6 +122,11 @@
 <script>
 export default {
   props: ["inputArray"],
+  methods: {
+    changeCursor() {
+      return (window.body.style.cursor = "pointer");
+    },
+  },
 };
 </script>
 
@@ -197,6 +206,14 @@ export default {
   top: 60%;
   right: -2.7rem;
   transform: translate(-50% -50%);
+
+  cursor: pointer;
+}
+
+.select-container:active,
+.select-container::selection {
+  cursor: crosshair;
+  scale: 1.05;
 }
 .svg-arrow {
   height: 1.3rem;

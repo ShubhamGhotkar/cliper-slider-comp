@@ -50,7 +50,7 @@
       <!--  -->
       <div class="flex btn-container">
         <button class="btn-cancle save-btn">Save Change</button>
-        <button class="btn-cancle" id="deleteBtn" @click="handleDelete">
+        <button class="btn-cancle deleteBtn" @click="handleDelete">
           Cancle
         </button>
       </div>
@@ -259,6 +259,16 @@ export default {
       let deleteEle = parent.document.querySelector("#iframe");
       window.alert(deleteEle);
     },
+    getTextFromWebpage() {
+      const selection = window.getSelection();
+
+      if (selection && selection.toString().trim() !== "") {
+        const text = selection.toString();
+        console.log(text);
+      } else {
+        console.log("No text selected.");
+      }
+    },
   },
 };
 </script>
@@ -315,6 +325,12 @@ export default {
   margin-top: 0.5rem;
   display: grid;
   place-items: center;
+  cursor: pointer;
+}
+
+.product_img-click:active,
+.product_img-click:visited {
+  cursor: crosshair;
 }
 
 .product_img-click-dash {
