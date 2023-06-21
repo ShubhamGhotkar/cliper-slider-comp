@@ -6,24 +6,17 @@
 <script>
 export default {
   created() {
-    // window.parent.postMessage("Hello from the iframe!", "*");
-    // window.addEventListener("message", function (event) {
-    //   let data = event.data;
-    //   console.log(data);
-    // });
+    window.parent.postMessage("Hello from parent window!", "*");
+
+    window.addEventListener("message", function (event) {
+      console.log("vue project", event.data);
+    });
   },
   mounted() {
-    // window.parent.postMessage("Hello from the iframe!", "*");
-
-    // var topLevelElement = this.$el.parentNode; // Access the top-level element
-    // console.log(topLevelElement);
-    // Get the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
-
-    // Access the individual query parameters
     const data1 = urlParams.get("data1");
 
-    console.log(data1); // Output: value1
+    console.log(data1);
   },
 };
 </script>
