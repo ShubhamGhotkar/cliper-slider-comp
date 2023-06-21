@@ -98,7 +98,7 @@
       <div
         class="select-container"
         v-if="itm.clientsProp[0].isSelect"
-        @click="changeCursor(itm.setData)"
+        @click.prevent="changeCursor(itm.setData)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -122,11 +122,23 @@
 <script>
 export default {
   props: ["inputArray"],
+  data() {
+    return {
+      selectData: [],
+    };
+  },
+
+  mounted() {
+    let localData = localStorage.getItem("selectArray") || [];
+    this.selectData = localData;
+    console.log(JSON.stringify(localData));
+  },
   methods: {
     changeCursor(e) {
-      window.parent.postMessage({ action: "select text", key: e }, "*");
+      e.preventDefault;
       document.body.style.cursor = "crosshair";
-      
+      window.parent.postMessage({ action: "select text", key: e }, "*");
+      document.body.style.cursor = "default";
     },
   },
 };

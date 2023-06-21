@@ -27,7 +27,7 @@
       <ImgSlider :imgArray="imagesrc" />
 
       <label class="product_info mg">Clip additional images:</label>
-      <div class="product_img-click">
+      <div class="product_img-click" @click="handleSelectImage">
         <div class="product_img-click-dash">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +101,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: false, iIcon: false, isSelect: false }],
-          setData: "",
+          setData: "VendorProductName",
         },
         {
           labelTittle: "Client-Facing Product Name:",
@@ -112,7 +112,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: false, iIcon: true, isSelect: false }],
-          setData: "",
+          setData: "ClientFacingProductName",
         },
         {
           labelTittle: "Vendor:",
@@ -123,7 +123,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: false, iIcon: false, isSelect: false }],
-          setData: "",
+          setData: "Vendor",
         },
         {
           labelTittle: "Link:",
@@ -134,7 +134,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: false, iIcon: false, isSelect: false }],
-          setData: "",
+          setData: "Link",
         },
         {
           labelTittle: "Category:",
@@ -153,7 +153,7 @@ export default {
           placeholder: "",
           prop: 'disabled selected value=""',
           clientsProp: [{ clientSeen: false, iIcon: false, isSelect: false }],
-          setData: "",
+          setData: "Category",
         },
         {
           labelTittle: "Tags:",
@@ -164,7 +164,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: false, iIcon: false, isSelect: false }],
-          setData: "",
+          setData: "Tags",
         },
         {
           labelTittle: "",
@@ -231,7 +231,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: false, iIcon: false, isSelect: true }],
-          setData: "materialFinish:",
+          setData: "MaterialFinish:",
         },
         {
           labelTittle: "Est. Lead Time:",
@@ -242,7 +242,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: true, iIcon: false, isSelect: false }],
-          setData: "",
+          setData: "EstLeadTime",
         },
         {
           labelTittle: "Est. Shipping Cost:",
@@ -253,7 +253,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: true, iIcon: false, isSelect: false }],
-          setData: "",
+          setData: "EstShippingCost",
         },
         {
           labelTittle: "General Notes:",
@@ -264,7 +264,7 @@ export default {
           placeholder: "",
           prop: "",
           clientsProp: [{ clientSeen: true, iIcon: false, isSelect: true }],
-          setData: "generalNotes",
+          setData: "GeneralNotes",
         },
       ],
     };
@@ -275,15 +275,9 @@ export default {
       let deleteEle = parent.document.querySelector("#iframe");
       window.alert(deleteEle);
     },
-    getTextFromWebpage() {
-      const selection = window.getSelection();
 
-      if (selection && selection.toString().trim() !== "") {
-        const text = selection.toString();
-        console.log(text);
-      } else {
-        console.log("No text selected.");
-      }
+    handleSelectImage() {
+      window.parent.postMessage({ action: "select image", key: "" }, "*");
     },
   },
 };
