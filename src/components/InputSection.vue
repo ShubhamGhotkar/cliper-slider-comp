@@ -45,7 +45,7 @@
         cols="30"
         rows="4"
         v-if="itm.type === 'textArea'"
-        :value="itm.setdata"
+        :value="$store.state.textInputData[itm.setData]"
       ></textarea>
 
       <!--  -->
@@ -61,11 +61,12 @@
       </select>
 
       <!--  -->
+
       <input
         type="text"
         :class="itm.inputClasses"
         v-if="itm.type === 'text'"
-        :value="getData"
+        :value="$store.state.textInputData[itm.setData]"
       />
       <!--  -->
       <div class="price-container" v-if="false">
@@ -127,35 +128,28 @@
 </template>
 
 <script>
+import store from "../store/index";
+window.addEventListener("message", function (event) {
+  if (event.data.key == "textData") {
+    this.textData = event.data.value;
+
+    store.commit("setTextData", event.data.value);
+  } else if (event.data.key == "imgData") {
+    store.commit("setImgData", event.data.value);
+  }
+});
 export default {
-  created() {
-    window.addEventListener("message", function (event) {
-      if (event.data.key == "textData") {
-        this.textData = event.data.value;
-
-        console.log("textData", this.textData);
-      }
-    });
+  updated() {
+    console.log("updated");
   },
-
-  computed: {
-    getData() {
-      return this.textData.SKU;
-    },
-  },
+  computed: {},
   props: ["inputArray"],
   data() {
     return {
-      selectData: [],
-      inputData: this.$store.textData,
-      textData: {},
+      data: store.state.textInputData,
     };
   },
 
-  mounted() {
-    let localData = localStorage.getItem("selectArray") || [];
-    this.selectData = localData;
-  },
   methods: {
     handleClickToSelect(e) {
       e.preventDefault;
@@ -163,9 +157,8 @@ export default {
       window.parent.postMessage({ action: "select text", key: e }, "*");
       document.body.style.cursor = "default";
     },
-    getValue() {
-      let value = this.textData;
-      return value;
+    getInputValue(key) {
+      return this.textData[key];
     },
   },
 };
@@ -189,9 +182,15 @@ export default {
 
 .product_input {
   width: 100%;
-  padding: 1rem 0.2rem;
   border-radius: 0.8rem;
   border: 2px solid rgb(212, 211, 211);
+  font-weight: 500;
+  font-size: 1.5rem;
+  padding: 1rem 1.2rem;
+  line-height: 1.2;
+}
+.product_input:focus {
+  outline: none;
 }
 .text-area {
   width: 100%;
@@ -199,8 +198,15 @@ export default {
   border-radius: 0.8rem;
   overflow-y: auto;
   border: 2px solid rgb(212, 211, 211);
+  color: black;
+  font-weight: 500;
+  font-size: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  line-height: 1.2;
 }
-
+.text-area:focus {
+  outline: none;
+}
 .dropdown {
   font-size: 1.6rem;
   font-weight: 500;
@@ -216,6 +222,7 @@ export default {
   width: 60%;
   padding: 1rem;
   border: 1px solid gray;
+  resize: none;
 }
 .dropdown {
   font-size: 1.6rem;

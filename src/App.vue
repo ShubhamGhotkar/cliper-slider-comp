@@ -4,14 +4,21 @@
   </div>
 </template>
 <script>
-window.parent.postMessage("Hello from parent window!", "*");
+// import store from "./store/index";
 
 export default {
-  mounted() {
-    let m = JSON.parse(localStorage.getItem("textArray"));
-    console.log(m);
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const data1 = urlParams.get("data1");
+  mounted() {},
+
+  created() {
+    window.addEventListener("message", function (event) {
+      if (event.data.key == "textData") {
+        this.textData = event.data.value;
+
+        // store.commit("setTextData", event.data.value);
+      }
+
+      // console.log(event.data);
+    });
   },
 };
 </script>

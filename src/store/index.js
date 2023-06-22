@@ -5,12 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    textData: [],
+    textInputData: {},
+    images: [],
   },
   getters: {},
   mutations: {
     setTextData(state, data) {
-      state.textData = data;
+      state.textInputData = data;
+    },
+    setImgData(state, data) {
+      state.images = data;
     },
   },
   actions: {},

@@ -27,29 +27,41 @@
       <ImgSlider :imgArray="imagesrc" />
 
       <label class="product_info mg">Clip additional images:</label>
-      <div class="product_img-click" @click="handleSelectImage">
-        <div class="product_img-click-dash">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="dash-curser"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19.5 19.5l-15-15m0 0v11.25m0-11.25h11.25"
-            />
-          </svg>
+
+      <div class="img-container">
+        <div class="product_img-click" @click="handleSelectImage">
+          <div class="product_img-click-dash">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="dash-curser"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 19.5l-15-15m0 0v11.25m0-11.25h11.25"
+              />
+            </svg>
+          </div>
         </div>
+        <img
+          :src="img"
+          alt="select_img"
+          :key="img"
+          class="select-img"
+          v-for="img in $store.state.images"
+        />
       </div>
 
       <InputSection :inputArray="cliperData" />
       <!--  -->
       <div class="flex btn-container">
-        <button class="btn-cancle save-btn">Save Change</button>
+        <button class="btn-cancle save-btn" @click="handleSave">
+          Save Change
+        </button>
         <button class="btn-cancle deleteBtn" @click="handleDelete">
           Cancle
         </button>
@@ -61,6 +73,7 @@
 <script>
 import ImgSlider from "../components/Img-Slider.vue";
 import InputSection from "../components/InputSection.vue";
+
 export default {
   components: {
     ImgSlider,
@@ -271,9 +284,11 @@ export default {
   },
 
   methods: {
+    handleSave() {
+      window.parent.postMessage({ action: "save change", key: "" }, "*");
+    },
     handleDelete() {
-      let deleteEle = parent.document.querySelector("#iframe");
-      window.alert(deleteEle);
+      window.parent.postMessage({ action: "delete frame", key: "" }, "*");
     },
 
     handleSelectImage() {
@@ -322,13 +337,25 @@ export default {
   color: gray;
 }
 
+.img-container {
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  align-items: center;
+  height: auto;
+}
 .product_img {
   width: 29rem;
   height: 29rem;
   border: 1px solid rgb(159, 158, 158);
 }
-
 .product_img-click {
+  order: 1;
+}
+.product_img-click,
+.select-img {
   height: 5rem;
   width: 5rem;
   border: 1px solid rgb(172, 172, 172);
