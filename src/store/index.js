@@ -9,7 +9,9 @@ export default new Vuex.Store({
   },
   getters: {},
   mutations: {
-    
+    setTextData(state, data) {
+      state.textData = data;
+    },
   },
   actions: {},
   modules: {},

@@ -4,19 +4,14 @@
   </div>
 </template>
 <script>
+window.parent.postMessage("Hello from parent window!", "*");
+
 export default {
-  created() {
-    window.parent.postMessage("Hello from parent window!", "*");
-
-    window.addEventListener("message", function (event) {
-      console.log("vue project", event.data);
-    });
-  },
   mounted() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const data1 = urlParams.get("data1");
-
-    console.log(data1);
+    let m = JSON.parse(localStorage.getItem("textArray"));
+    console.log(m);
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const data1 = urlParams.get("data1");
   },
 };
 </script>

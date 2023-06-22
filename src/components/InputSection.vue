@@ -45,6 +45,7 @@
         cols="30"
         rows="4"
         v-if="itm.type === 'textArea'"
+        :value="itm.setdata"
       ></textarea>
 
       <!--  -->
@@ -60,7 +61,12 @@
       </select>
 
       <!--  -->
-      <input type="text" :class="itm.inputClasses" v-if="itm.type === 'text'" />
+      <input
+        type="text"
+        :class="itm.inputClasses"
+        v-if="itm.type === 'text'"
+        :value="getData"
+      />
       <!--  -->
       <div class="price-container" v-if="false">
         <div class="price-container-itm-1">
@@ -98,7 +104,8 @@
       <div
         class="select-container"
         v-if="itm.clientsProp[0].isSelect"
-        @click.prevent="changeCursor(itm.setData)"
+        @click="handleClickToSelect(itm.setData)"
+        :key="itm.setData"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -121,24 +128,44 @@
 
 <script>
 export default {
+  created() {
+    window.addEventListener("message", function (event) {
+      if (event.data.key == "textData") {
+        this.textData = event.data.value;
+
+        console.log("textData", this.textData);
+      }
+    });
+  },
+
+  computed: {
+    getData() {
+      return this.textData.SKU;
+    },
+  },
   props: ["inputArray"],
   data() {
     return {
       selectData: [],
+      inputData: this.$store.textData,
+      textData: {},
     };
   },
 
   mounted() {
     let localData = localStorage.getItem("selectArray") || [];
     this.selectData = localData;
-    console.log(JSON.stringify(localData));
   },
   methods: {
-    changeCursor(e) {
+    handleClickToSelect(e) {
       e.preventDefault;
       document.body.style.cursor = "crosshair";
       window.parent.postMessage({ action: "select text", key: e }, "*");
       document.body.style.cursor = "default";
+    },
+    getValue() {
+      let value = this.textData;
+      return value;
     },
   },
 };
