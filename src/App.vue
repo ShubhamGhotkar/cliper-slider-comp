@@ -6,19 +6,15 @@
 <script>
 // import store from "./store/index";
 
+// window.addEventListener("message", (event) => {
+//   if (event.data.action === "page data") {
+//     store.commit("setTextData", event.data.value);
+//     // console.log();
+//   }
+// });
 export default {
-  mounted() {},
-
-  created() {
-    window.addEventListener("message", function (event) {
-      if (event.data.key == "textData") {
-        this.textData = event.data.value;
-
-        // store.commit("setTextData", event.data.value);
-      }
-
-      // console.log(event.data);
-    });
+  mounted() {
+    // window.parent.postMessage({ action: "get data", key: "" }, "*");
   },
 };
 </script>
