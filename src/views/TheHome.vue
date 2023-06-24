@@ -79,6 +79,7 @@ export default {
     ImgSlider,
     InputSection,
   },
+
   data() {
     return {
       imagesrc: [

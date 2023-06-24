@@ -129,16 +129,19 @@
 
 <script>
 import store from "../store/index";
-window.addEventListener("message", function (event) {
-  if (event.data.key == "textData") {
-    this.textData = event.data.value;
-
-    store.commit("setTextData", event.data.value);
-  } else if (event.data.key == "imgData") {
-    store.commit("setImgData", event.data.value);
-  }
-});
 export default {
+  mounted() {
+    window.addEventListener("message", (event) => {
+      if (event.data.key == "textData") {
+        this.textData = event.data.value;
+
+        store.commit("setTextData", event.data.value);
+      } else if (event.data.key == "imgData") {
+        store.commit("setImgData", event.data.value);
+      }
+      // console.log(event.data);
+    });
+  },
   updated() {
     console.log("updated");
   },

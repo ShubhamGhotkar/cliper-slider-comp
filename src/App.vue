@@ -15,6 +15,8 @@
 export default {
   mounted() {
     // window.parent.postMessage({ action: "get data", key: "" }, "*");
+
+    // console.log(document.querySelector('[data-hb-id="Heading"]'));
   },
 };
 </script>
