@@ -129,6 +129,7 @@
 
 <script>
 import store from "../store/index";
+
 export default {
   mounted() {
     window.addEventListener("message", (event) => {
@@ -139,7 +140,7 @@ export default {
       } else if (event.data.key == "imgData") {
         store.commit("setImgData", event.data.value);
       }
-      // console.log(event.data);
+      console.log(event.data);
     });
   },
   updated() {},

@@ -11,7 +11,6 @@ export default {
   created() {
     window.addEventListener("message", (event) => {
       let { key, value } = event.data;
-      console.log(event.data);
 
       let user = {
         id: value,
@@ -34,7 +33,6 @@ export default {
       };
 
       if (key === "localhost") {
-        window.alert("localhost");
         let isUserExist = this.userExist("localHost", value);
         if (isUserExist) {
           console.log("exist");
@@ -53,6 +51,14 @@ export default {
         }
       } else if (key === "browserData") {
         this.$store.commit("setTextData", value);
+      } else if (key == "updatedKey") {
+        console.log(userData.wayFair);
+        let { objKey, path } = value;
+        userData.wayFair[0][objKey] = path;
+        event.source.postMessage(
+          { action: "getUserData", key: userData.wayFair[0] },
+          "*"
+        );
       }
     });
   },
