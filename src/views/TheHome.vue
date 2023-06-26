@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <ImgSlider :imgArray="imagesrc" />
+      <ImgSlider :imgArray="this.$store.state.textInputData.Corouser" />
 
       <label class="product_info mg">Clip additional images:</label>
 
@@ -82,18 +82,6 @@ export default {
 
   data() {
     return {
-      imagesrc: [
-        "https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29mYXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-
-        "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c29mYXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-
-        "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c29mYXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-
-        "https://images.unsplash.com/photo-1611967164521-abae8fba4668?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c29mYXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-
-        "https://images.unsplash.com/photo-1565374395542-0ce18882c857?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNvZmFzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-      ],
-
       cliperData: [
         {
           labelTittle: "Where do you want to save this item?",

@@ -5,7 +5,25 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    textInputData: {},
+    textInputData: {
+      id: "",
+      VendorProductName: "",
+      ClientFacingProductName: "",
+      Vendor: "",
+      Link: window.location.href,
+      Category: "",
+      Tags: "",
+      MSRP: "",
+      SKU: "",
+      Price: "",
+      Description: "",
+      Dimensions: "",
+      MaterialFinish: "",
+      EstLeadTime: "",
+      EstShippingCost: "",
+      GeneralNotes: "",
+      Corouser: [],
+    },
     images: [],
   },
   getters: {},

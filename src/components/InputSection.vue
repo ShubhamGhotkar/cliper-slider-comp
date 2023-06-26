@@ -142,9 +142,7 @@ export default {
       // console.log(event.data);
     });
   },
-  updated() {
-    console.log("updated");
-  },
+  updated() {},
   computed: {},
   props: ["inputArray"],
   data() {
@@ -191,6 +189,7 @@ export default {
   font-size: 1.5rem;
   padding: 1rem 1.2rem;
   line-height: 1.2;
+  color: gray !important;
 }
 .product_input:focus {
   outline: none;
@@ -201,7 +200,7 @@ export default {
   border-radius: 0.8rem;
   overflow-y: auto;
   border: 2px solid rgb(212, 211, 211);
-  color: black;
+  color: gray !important;
   font-weight: 500;
   font-size: 1.5rem;
   padding: 0.6rem 1.2rem;
