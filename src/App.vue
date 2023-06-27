@@ -35,7 +35,10 @@ export default {
       if (key === "localhost") {
         let isUserExist = this.userExist("localHost", value);
         if (isUserExist) {
-          console.log("exist");
+          event.source.postMessage(
+            { action: "getUserData", key: isUserExist },
+            "*"
+          );
         } else {
           userData.localHost.push(user);
           console.log("User Added to localHost", userData);
@@ -43,7 +46,10 @@ export default {
       } else if (key === "www.wayfair.com") {
         let isUserExist = this.userExist("wayFair", value);
         if (isUserExist) {
-          window.alert("exist");
+          event.source.postMessage(
+            { action: "getUserData", key: isUserExist },
+            "*"
+          );
         } else {
           userData.wayFair.push(user);
           console.log("User Added To wayFair", userData);
