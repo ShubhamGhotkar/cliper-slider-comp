@@ -52,7 +52,7 @@
           alt="select_img"
           :key="img"
           class="select-img"
-          v-for="img in $store.state.images"
+          v-for="img in $store.state.textInputData.SelectImg"
         />
       </div>
 
@@ -75,6 +75,7 @@ import ImgSlider from "../components/Img-Slider.vue";
 import InputSection from "../components/InputSection.vue";
 
 export default {
+  created() {},
   components: {
     ImgSlider,
     InputSection,

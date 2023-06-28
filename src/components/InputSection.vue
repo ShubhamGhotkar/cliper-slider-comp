@@ -140,7 +140,7 @@ export default {
       } else if (event.data.key == "imgData") {
         store.commit("setImgData", event.data.value);
       }
-      console.log(event.data);
+      // console.log(event.data);
     });
   },
   updated() {},
@@ -156,7 +156,7 @@ export default {
     handleClickToSelect(e) {
       e.preventDefault;
       document.body.style.cursor = "crosshair";
-      window.parent.postMessage({ action: "select text", key: e }, "*");
+      window.parent.postMessage({ action: "select text", key: e, id: "" }, "*");
       document.body.style.cursor = "default";
     },
     getInputValue(key) {

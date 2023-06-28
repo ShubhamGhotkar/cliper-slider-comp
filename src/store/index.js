@@ -23,6 +23,7 @@ export default new Vuex.Store({
       EstShippingCost: "",
       GeneralNotes: "",
       Corouser: [],
+      SelectImg: [],
     },
     images: [],
   },
@@ -30,6 +31,7 @@ export default new Vuex.Store({
   mutations: {
     setTextData(state, data) {
       state.textInputData = data;
+      console.log(state.textInputData);
     },
     setImgData(state, data) {
       state.images = data;
