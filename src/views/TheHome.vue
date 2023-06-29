@@ -75,7 +75,6 @@ import ImgSlider from "../components/Img-Slider.vue";
 import InputSection from "../components/InputSection.vue";
 
 export default {
-  created() {},
   components: {
     ImgSlider,
     InputSection,
