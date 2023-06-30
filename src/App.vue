@@ -13,21 +13,24 @@ export default {
     };
   },
   created() {
-    if (!JSON.parse(localStorage.getItem("setItmVUE2"))) {
-      localStorage.setItem("setItmVUE2", JSON.stringify(defaultConfig));
+    if (!JSON.parse(localStorage.getItem("browserCliperConfig"))) {
+      localStorage.setItem(
+        "browserCliperConfig",
+        JSON.stringify(defaultConfig)
+      );
     }
   },
   mounted() {
     window.addEventListener("message", (event) => {
       let { key, value } = event.data;
-
+      console.log(event.data);
       if (key === "setData") {
         event.source.postMessage({ action: "getUserData", key: value }, "*");
       } else if (key === "browserData") {
         this.$store.commit("setTextData", value);
       } else if (key === "updateData") {
         let { keys, path, id } = value;
-        let data = JSON.parse(localStorage.getItem("setItmVUE2"));
+        let data = JSON.parse(localStorage.getItem("browserCliperConfig"));
         for (let key in data) {
           if (data[key].id === id) {
             data[key][keys] = path;
@@ -40,8 +43,21 @@ export default {
           }
         }
       } else if (key === "imgData") {
-        event.source.postMessage({ action: "getUserData", key: value }, "*");
+        let { id, imgSrc } = value;
+        let data = JSON.parse(localStorage.getItem("browserCliperConfig"));
+        for (let key in data) {
+          if (data[key].id === id) {
+            data[key].SelectImg.push(imgSrc);
+
+            event.source.postMessage(
+              { action: "getUserData", key: data[key] },
+              "*"
+            );
+          }
+        }
+        localStorage.setItem("browserCliperConfig", JSON.stringify(data));
       } else if (key === "updateDataToUserConfigue") {
+        window.alert(this.updateData);
         if (this.updateData && this.updateData !== {}) {
           let data = userConfigue;
           for (let entry in data) {
@@ -50,14 +66,13 @@ export default {
             }
           }
           this.userConfigue = data;
-          localStorage.setItem("setItmVUE2", JSON.stringify(userConfigue));
-          console.log(
-            "UPDATED DATA IN LOCAL STORAGE",
-            JSON.parse(localStorage.getItem("setItmVUE2"))
+          localStorage.setItem(
+            "browserCliperConfig",
+            JSON.stringify(userConfigue)
           );
         }
       } else if (key === "sentData") {
-        let data = JSON.parse(localStorage.getItem("setItmVUE2"));
+        let data = JSON.parse(localStorage.getItem("browserCliperConfig"));
         if (data) {
           for (let entry in data) {
             if (data[entry].id === value) {

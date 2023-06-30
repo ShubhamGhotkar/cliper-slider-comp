@@ -63,7 +63,7 @@ function getElementPath(e) {
     }
   }
   // Return the element path.
-  console.log(elementPath);
+  // console.log(elementPath);
 }
 if (document.readyState === "complete") {
   document.addEventListener("click", getElementPath);
@@ -97,7 +97,6 @@ if (document.readyState === "complete") {
   window.addEventListener("message", (event) => {
     const { action, key } = event.data;
     if (action === "getUserData") {
-      console.log("event.data", event.data);
       let browserData = {};
       if (key) {
         for (let [keys, value] of Object.entries(key)) {
@@ -158,14 +157,13 @@ if (document.readyState === "complete") {
 
     const handleImgClick = (e) => {
       let clickEle = e.target;
-      let imgSrc = "";
       if (clickEle.tagName === "IMG") {
-        imgSrc = clickEle.src;
-        let currentPage = getData();
-        currentPage.SelectImg.push(imgSrc);
-        event.source.postMessage({ key: "imgData", value: currentPage }, "*");
-        // setData(currentPage);
-        //   userConfigue = currentPage;
+        let imgSrc = clickEle.src;
+
+        event.source.postMessage(
+          { key: "imgData", value: { id: window.location.host, imgSrc } },
+          "*"
+        );
       } else {
         window.alert("Please select a proper image");
       }
@@ -181,14 +179,12 @@ if (document.readyState === "complete") {
       removeCliper();
     }
     if (action === "save change") {
-      window.alert(window.location.host);
       event.source.postMessage(
         { key: "updateDataToUserConfigue", value: "" },
         "*"
       );
-
       window.alert("data save sucessFully");
-      removeCliper();
+      // removeCliper();
     }
   });
 } else {
