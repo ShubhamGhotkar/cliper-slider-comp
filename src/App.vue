@@ -30,18 +30,25 @@ export default {
         this.$store.commit("setTextData", value);
       } else if (key === "updateData") {
         let { keys, path, id } = value;
-        let data = JSON.parse(localStorage.getItem("browserCliperConfig"));
-        for (let key in data) {
-          if (data[key].id === id) {
-            data[key][keys] = path;
+        // let data = JSON.parse(localStorage.getItem("browserCliperConfig"));
+        // for (let key in data) {
+        //   if (data[key].id === id) {
+        //     data[key][keys] = path;
+        //     this.updateData = data[key];
+        //     event.source.postMessage(
+        //       { action: "getUserData", key: data[key] },
+        //       "*"
+        //     );
+        //     this.updateData = data[key];
+        //   }
+        // }
 
-            event.source.postMessage(
-              { action: "getUserData", key: data[key] },
-              "*"
-            );
-            this.updateData = data[key];
-          }
-        }
+        this.updateData[keys] = path;
+        event.source.postMessage(
+          { action: "getUserData", key: this.updateData },
+          "*"
+        );
+        console.log(id);
       } else if (key === "imgData") {
         let { id, imgSrc } = value;
         let data = JSON.parse(localStorage.getItem("browserCliperConfig"));
@@ -57,7 +64,6 @@ export default {
         }
         localStorage.setItem("browserCliperConfig", JSON.stringify(data));
       } else if (key === "updateDataToUserConfigue") {
-        window.alert(this.updateData);
         if (this.updateData && this.updateData !== {}) {
           let data = userConfigue;
           for (let entry in data) {
@@ -70,12 +76,14 @@ export default {
             "browserCliperConfig",
             JSON.stringify(userConfigue)
           );
+          this.updateData = {};
         }
       } else if (key === "sentData") {
         let data = JSON.parse(localStorage.getItem("browserCliperConfig"));
         if (data) {
           for (let entry in data) {
             if (data[entry].id === value) {
+              this.updateData = data[entry];
               event.source.postMessage(
                 { action: "getUserData", key: data[entry] },
                 "*"

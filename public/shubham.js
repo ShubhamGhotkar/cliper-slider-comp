@@ -38,36 +38,36 @@ function setPath(element) {
 function postMessageToFrame(iframe, data) {
   iframe.contentWindow.postMessage({ key: "sentData", value: data }, "*");
 }
-function getElementPath(e) {
-  // Get the root element.
-  const element = e.target;
-  // Create an array to store the element path.
-  let elementPath = [];
-  // Check if the element has an id.
-  if (element.id) {
-    elementPath.push("#" + element.id);
-  } else {
-    // Check if the element has a class.
-    if (element.classList.length) {
-      elementPath.push(".", element.className);
-    } else {
-      // Check if the element has a parent.
-      if (element.parentNode) {
-        // Get the element path for the parent element.
-        const parentPath = getElementPath(element.parentNode);
-        // Add the element to the element path.
-        elementPath.push(element);
-        // Add the parent path to the element path.
-        elementPath = elementPath.concat(parentPath);
-      }
-    }
-  }
-  // Return the element path.
-  // console.log(elementPath);
-}
-if (document.readyState === "complete") {
-  document.addEventListener("click", getElementPath);
+// function xys(e) {
+//   let element = e.target;
+//   const pathArray = [];
+//   let currentElement = element;
+//   while (currentElement !== document.body && currentElement !== null) {
+//     let elementSelector = currentElement.tagName.toLowerCase();
+//     if (
+//       currentElement.id &&
+//       !currentElement.id.includes(":") &&
+//       !currentElement.id.includes("#")
+//     ) {
+//       elementSelector = "#" + currentElement.id;
+//     } else if (currentElement.classList.length > 0) {
+//       const classNames = Array.from(currentElement.classList).filter(
+//         (className) => !className.includes(":") && !className.includes(".")
+//       );
+//       elementSelector = "." + classNames.join(".");
+//     }
+//     // if (currentElement.parentNode.tagName === "DIV") {
+//     //   pathArray.unshift(elementSelector);
+//     //   pathArray.unshift(currentElement.parentNode.tagName.toLowerCase());
+//     // } else {
+//     pathArray.unshift(elementSelector);
+//     // }
+//     // currentElement = currentElement.parentNode;
+//   }
+//   console.log(pathArray.join("  "));
+// }
 
+if (document.readyState === "complete") {
   let iframe = document.querySelector("#iframe");
 
   iframe.addEventListener("load", () => {
@@ -78,7 +78,7 @@ if (document.readyState === "complete") {
       case "www.ikea.com":
         postMessageToFrame(iframe, window.location.host);
         break;
-      case "www.houzz.in":
+      case "www.houzz.com":
         postMessageToFrame(iframe, window.location.host);
         break;
       case "www.pepperfry.com":
@@ -120,6 +120,8 @@ if (document.readyState === "complete") {
               imgArray = imgArray.map((val) => val.src);
               browserData[keys] = imgArray;
             }
+          } else if (keys === "Link") {
+            browserData[keys] = window.location.href;
           } else {
             browserData[keys] = key[keys];
           }
