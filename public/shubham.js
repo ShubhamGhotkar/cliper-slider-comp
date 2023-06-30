@@ -96,40 +96,8 @@ if (document.readyState === "complete") {
 
   window.addEventListener("message", (event) => {
     const { action, key } = event.data;
-    if (action === "getUserData") {
-      let browserData = {};
-      if (key) {
-        for (let [keys, value] of Object.entries(key)) {
-          if (
-            value &&
-            value !== "" &&
-            keys !== "id" &&
-            keys !== "Link" &&
-            keys !== "Corouser" &&
-            keys !== "SelectImg"
-          ) {
-            let ele = document.querySelector(value);
-            if (value === 'meta[name="description"]') {
-              browserData[keys] = ele ? ele.content : "";
-            } else {
-              browserData[keys] = ele ? ele.innerText : "";
-            }
-          } else if (keys === "Corouser") {
-            if (value && value !== []) {
-              let imgArray = Array.from(document.querySelectorAll(value)) || [];
-              imgArray = imgArray.map((val) => val.src);
-              browserData[keys] = imgArray;
-            }
-          } else if (keys === "Link") {
-            browserData[keys] = window.location.href;
-          } else {
-            browserData[keys] = key[keys];
-          }
-        }
-      }
-      event.source.postMessage({ key: "browserData", value: browserData }, "*");
-    }
-    function handleTextClick(e) {
+
+    const handleTextClick = (e) => {
       const clickedElement = e.target;
       const selectedText = clickedElement.innerText;
 
@@ -150,12 +118,7 @@ if (document.readyState === "complete") {
           "*"
         );
       }
-    }
-
-    if (action === "select text") {
-      document.body.style.cursor = "crosshair";
-      document.body.addEventListener("click", handleTextClick, { once: true });
-    }
+    };
 
     const handleImgClick = (e) => {
       let clickEle = e.target;
@@ -171,22 +134,69 @@ if (document.readyState === "complete") {
       }
       document.body.style.cursor = "default";
     };
+    let browserData = {};
 
-    if (action === "select image") {
-      document.body.style.cursor = "crosshair";
-      document.body.addEventListener("click", handleImgClick, { once: true });
-    }
+    switch (action) {
+      case "getUserData":
+        if (key) {
+          for (let [keys, value] of Object.entries(key)) {
+            if (
+              value &&
+              value !== "" &&
+              keys !== "id" &&
+              keys !== "Link" &&
+              keys !== "Corouser" &&
+              keys !== "SelectImg"
+            ) {
+              let ele = document.querySelector(value);
+              if (value === 'meta[name="description"]') {
+                browserData[keys] = ele ? ele.content : "";
+              } else {
+                browserData[keys] = ele ? ele.innerText : "";
+              }
+            } else if (keys === "Corouser") {
+              if (value && value !== []) {
+                let imgArray =
+                  Array.from(document.querySelectorAll(value)) || [];
+                imgArray = imgArray.map((val) => val.src);
+                browserData[keys] = imgArray;
+              }
+            } else if (keys === "Link") {
+              browserData[keys] = window.location.href;
+            } else {
+              browserData[keys] = key[keys];
+            }
+          }
+        }
+        event.source.postMessage(
+          { key: "browserData", value: browserData },
+          "*"
+        );
+        break;
+      case "select text":
+        document.body.style.cursor = "crosshair";
+        document.body.addEventListener("click", handleTextClick, {
+          once: true,
+        });
+        break;
+      case "select image":
+        document.body.style.cursor = "crosshair";
+        document.body.addEventListener("click", handleImgClick, { once: true });
+        break;
+      case "delete frame":
+        removeCliper();
+        break;
+      case "save change":
+        event.source.postMessage(
+          { key: "updateDataToUserConfigue", value: "" },
+          "*"
+        );
+        window.alert("data save sucessFully");
+        // removeCliper();
+        break;
 
-    if (action === "delete frame") {
-      removeCliper();
-    }
-    if (action === "save change") {
-      event.source.postMessage(
-        { key: "updateDataToUserConfigue", value: "" },
-        "*"
-      );
-      window.alert("data save sucessFully");
-      // removeCliper();
+      default:
+        break;
     }
   });
 } else {
